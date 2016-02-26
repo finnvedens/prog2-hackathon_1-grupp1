@@ -10,3 +10,5 @@ C:\Users\Alex Gustafsson\Documents\GitHub\prog2-hackathon_1-grupp2\Hackathon_1\o
 C:\Users\Alex Gustafsson\Documents\GitHub\prog2-hackathon_1-grupp2\Hackathon_1\obj\Debug\Hackathon_1.csprojResolveAssemblyReference.cache
 C:\Users\Alex Gustafsson\Documents\GitHub\prog2-hackathon_1-grupp2\Hackathon_1\bin\Debug\Hackathon_1.exe
 C:\Users\Alex Gustafsson\Documents\GitHub\prog2-hackathon_1-grupp2\Hackathon_1\bin\Debug\Hackathon_1.pdb
+C:\Users\Alex Gustafsson\Documents\GitHub\prog2-hackathon_1-grupp2\Hackathon_1\obj\Debug\Hackathon_1.Properties.Resources.resources
+C:\Users\Alex Gustafsson\Documents\GitHub\prog2-hackathon_1-grupp2\Hackathon_1\obj\Debug\Hackathon_1.csproj.GenerateResource.Cache

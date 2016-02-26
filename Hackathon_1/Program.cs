@@ -15,6 +15,8 @@ namespace Hackathon_1
             Console.SetWindowSize(120, 35);
             Console.Title = "Dragon's Quest Ultra HD 2016";
 
+            Sounds.Loop(Sound.Background);
+
             Player player = new Player("Steve", new List<Item>());
 
             Room first = Rooms.ThreeDooredRoom;
@@ -56,15 +58,19 @@ namespace Hackathon_1
                     {
                         case "left":
                             first.Move(-1, 0);
+                            Sounds.Play(Sound.Background);
                             break;
                         case "up":
                             first.Move(0, -1);
+                            Sounds.Play(Sound.Background);
                             break;
                         case "right":
                             first.Move(1, 0);
+                            Sounds.Play(Sound.Background);
                             break;
                         case "down":
                             first.Move(0, 1);
+                            Sounds.Play(Sound.Background);
                             break;
                     }
 
