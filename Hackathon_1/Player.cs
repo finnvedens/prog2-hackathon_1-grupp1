@@ -12,6 +12,7 @@ namespace Hackathon_1
         public List<Item> items;
         public int positionX = 0;
         public int positionY = 0;
+        public int health = 100;
 
         public Player(string name, List<Item> items)
         {

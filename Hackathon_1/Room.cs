@@ -14,12 +14,14 @@ namespace Hackathon_1
         public List<Square> squares;
         public string name;
 
+        public Action<string> messageHandler;
+
         public int startPositionX;
         public int startPositionY;
 
         public Action onEntered;
 
-        public Room(string name, int width, int height, int startPositionX, int startPositionY, List<Square> squares, Action onEntered)
+        public Room(string name, int width, int height, int startPositionX, int startPositionY, List<Square> squares)
         {
             this.name = name;
             this.width = width;
@@ -28,21 +30,21 @@ namespace Hackathon_1
 
             this.startPositionX = startPositionX;
             this.startPositionY = startPositionY;
-
-            this.onEntered = onEntered;
         }
 
-        public void Enter()
+        public void Enter(ref Player player)
         {
+            this.player = player;
+
             this.player.positionX = this.startPositionX;
             this.player.positionY = this.startPositionY;
-            Art.WriteCenter("YOU HAVE ENTERED " + this.name.ToUpper());
-            onEntered();
+            //Art.WriteCenter("YOU HAVE ENTERED " + this.name.ToUpper());
+            //onEntered();
         }
 
         public void Leave()
         {
-            Art.WriteCenter("YOU LEFT " + this.name.ToUpper());
+            //Art.WriteCenter("YOU LEFT " + this.name.ToUpper());
         }
 
         public void Move(int x, int y)
@@ -50,7 +52,7 @@ namespace Hackathon_1
             int movedX = 0;
             int movedY = 0;
 
-            if(this.player.positionX + x < this.width && this.player.positionX + x >= 0)
+            if (this.player.positionX + x < this.width && this.player.positionX + x >= 0)
             {
                 movedX += x;
                 this.player.positionX += x;
@@ -62,13 +64,18 @@ namespace Hackathon_1
                 this.player.positionY += y;
             }
 
-            Console.WriteLine(this.player.name.ToUpper() + " moved to square " + String.Format("{0};{1}", this.player.positionX, this.player.positionY));
+            //Console.WriteLine(this.player.name.ToUpper() + " moved to square " + String.Format("{0};{1}", this.player.positionX, this.player.positionY));
 
-            Square square = this.squares.Where(sq => sq.positionX == this.player.positionX && sq.positionY == this.player.positionY).FirstOrDefault();
-
-            square.onEntered();
-            this.player.items.Add(square.item);
-            this.squares.Remove(square);
+            var squares = this.squares.Where(sq => sq.positionX == this.player.positionX && sq.positionY == this.player.positionY);
+            if (squares.Count() > 0)
+            {
+                Square square = squares.FirstOrDefault();
+                if (this.messageHandler != null)
+                    this.messageHandler(square.enterString);
+                if (square.item != null)
+                    this.player.items.Add(square.item);
+                this.squares.Remove(square);
+            }
         }
     }
 

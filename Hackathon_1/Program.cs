@@ -11,39 +11,86 @@ namespace Hackathon_1
         static void Main(string[] args)
         {
             //Setup Console Window
-            Console.SetBufferSize(120, 58);
-            Console.SetWindowSize(120, 58);
+            Console.SetBufferSize(120, 35);
+            Console.SetWindowSize(120, 35);
             Console.Title = "Dragon's Quest Ultra HD 2016";
 
-            Art.WriteCenter(Art.Title);
+            Player player = new Player("Steve", new List<Item>());
 
-            Art.WriteAnimatedCenter("The boy who lost his cat.", 1000, () =>
-            {
-                Console.WriteLine();
-                Art.WriteAnimatedCenter("You lost your cat and you ran after it.", 1000, () =>
-                {
-                    Art.WriteAnimatedCenter("It ran towards a castle and you fell through a trapdoor.", 1000, () =>
-                    {
-                        Art.WriteAnimatedCenter("When you got up you saw nothing but darkness.", 1000, () =>
-                        {
-                            Art.WriteAnimatedCenter("You must find your cat.", 1000, () =>
-                            {
-                                Art.WriteAnimatedCenter("It is here where your story begins.", 1000, () =>
-                                {
-                                    Console.WriteLine("\n\n\n");
-                                    Art.WriteAnimatedCenter("PRESS ENTER TO BEGIN", 1000, () =>
-                                    {
+            Room first = Rooms.ThreeDooredRoom;
+            first.Enter(ref player);
 
-                                    }, true);
-                                });
-                            });
-                        });
+            StatsScreen statsScreen = new StatsScreen(ref player);
+            //statsScreen.Draw();
 
-                    });
-                });
-            });
+            MapScreen mapScreen = new MapScreen(player, first);
+            //mapScreen.Draw();
+
+            TitleScreen titleScreen = new TitleScreen();
+            titleScreen.Draw();
+
+            InputScreen inputScreen = new InputScreen();
 
             Console.ReadKey();
+
+            Console.Clear();
+
+            statsScreen.Draw();
+            mapScreen.Draw();
+            inputScreen.Draw();
+
+            while (true)
+            {
+                string input = Console.ReadLine().ToLower();
+
+                inputScreen.Handle(input);
+
+                first.messageHandler = (string message) =>
+                {
+                    inputScreen.Handle(message);
+                };
+
+                if (input.Contains("move"))
+                {
+                    switch (input.Replace("move", "").Trim())
+                    {
+                        case "left":
+                            first.Move(-1, 0);
+                            break;
+                        case "up":
+                            first.Move(0, -1);
+                            break;
+                        case "right":
+                            first.Move(1, 0);
+                            break;
+                        case "down":
+                            first.Move(0, 1);
+                            break;
+                    }
+
+                    statsScreen.Redraw();
+                    mapScreen.Redraw();
+                } else if (input.Contains("use"))
+                {
+                    var items = player.items.Where(x => x.name.ToLower() == input.Replace("use", "").Trim());
+                    if (items.Count() > 0)
+                    {
+                        if (items.ElementAt(0).useString != null)
+                            inputScreen.Handle(items.ElementAt(0).useString);
+                        if (items.ElementAt(0).onUse != null)
+                            items.ElementAt(0).onUse(player);
+                        player.items.Remove(items.ElementAt(0));
+                    } else
+                    {
+                        inputScreen.Handle("The item '" + input.Replace("use", "").Trim() + "' was not found in your inventory");
+                    }
+
+                    statsScreen.Redraw();
+                    mapScreen.Redraw();
+                }
+
+                inputScreen.Redraw();
+            }
         }
     }
 }

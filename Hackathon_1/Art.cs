@@ -24,7 +24,7 @@ namespace Hackathon_1
             int height = text.Split('\n').Length;
             int width = text.Split('\n').Max(x => x.Length);
 
-            int windowHeight = 58;
+            int windowHeight = 35;
             int windowWidth = 120;
 
             int topPadding = (windowHeight - height) / 2;
@@ -33,7 +33,7 @@ namespace Hackathon_1
             for (int i = 0; i < topPadding; i++)
                 Console.WriteLine();
 
-            foreach(String line in text.Split('\n'))
+            foreach (String line in text.Split('\n'))
             {
                 for (int i = 0; i < leftPadding; i++)
                     Console.Write(" ");
@@ -51,7 +51,7 @@ namespace Hackathon_1
             Timer timer = new Timer(tick);
             timer.Elapsed += new ElapsedEventHandler((object sender, ElapsedEventArgs args) =>
             {
-                if(index == 0)
+                if (index == 0)
                 {
                     int width = text.Length;
                     int leftPadding = (windowWidth - width) / 2;
@@ -64,7 +64,7 @@ namespace Hackathon_1
                 if (index == text.Length)
                 {
                     timer.Stop();
-                    if(!skipNewline)
+                    if (!skipNewline)
                         Console.WriteLine();
                     callback();
                 }

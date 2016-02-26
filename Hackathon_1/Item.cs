@@ -10,16 +10,13 @@ namespace Hackathon_1
     {
         public string name;
         public string useString;
+        public Action<Player> onUse;
 
-        public Item(string name, string useString)
+        public Item(string name, string useString, Action<Player> onUse)
         {
             this.name = name;
             this.useString = useString;
-        }
-
-        public void Use()
-        {
-            Console.WriteLine("[" + this.name + "] " + this.useString);
+            this.onUse = onUse;
         }
     }
 }
