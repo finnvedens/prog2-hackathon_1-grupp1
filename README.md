@@ -1,3 +1,9 @@
+﻿# Dragon's Quest
+
+## The boy who lost his cat.
+
+![Main Screen](https://github.com/finnvedens/prog2-hackathon_1-grupp2/raw/master/dragonsquest.png "Main Screen")
+
 #Hackathon #1
 
 ##80-talet – en gyllene tid i datorspelets historia, med namn som Amstrad, Commodore 64 och den älskade Spectrum 48K.
