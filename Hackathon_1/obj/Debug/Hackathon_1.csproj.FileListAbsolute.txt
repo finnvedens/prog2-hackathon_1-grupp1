@@ -12,3 +12,5 @@ C:\Users\Alex Gustafsson\Documents\GitHub\prog2-hackathon_1-grupp2\Hackathon_1\b
 C:\Users\Alex Gustafsson\Documents\GitHub\prog2-hackathon_1-grupp2\Hackathon_1\bin\Debug\Hackathon_1.pdb
 C:\Users\Alex Gustafsson\Documents\GitHub\prog2-hackathon_1-grupp2\Hackathon_1\obj\Debug\Hackathon_1.Properties.Resources.resources
 C:\Users\Alex Gustafsson\Documents\GitHub\prog2-hackathon_1-grupp2\Hackathon_1\obj\Debug\Hackathon_1.csproj.GenerateResource.Cache
+C:\Users\Alex Gustafsson\Documents\GitHub\prog2-hackathon_1-grupp2\Hackathon_1\bin\Debug\Resources\background.wav
+C:\Users\Alex Gustafsson\Documents\GitHub\prog2-hackathon_1-grupp2\Hackathon_1\bin\Debug\Resources\move.wav

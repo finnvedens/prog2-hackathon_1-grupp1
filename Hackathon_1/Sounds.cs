@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Media;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,43 +19,40 @@ namespace Hackathon_1
 
     public static class Sounds
     {
-        public static void Play(Sound sound)
+        public static void Play(Sound sound, bool loop = false)
         {
-            SoundPlayer player;
-            switch (sound)
-            {
-                case Sound.Background:
-                    player = new SoundPlayer(Hackathon_1.Properties.Resources.background);
-                    break;
-                case Sound.Move:
-                    player = new SoundPlayer(Hackathon_1.Properties.Resources.move);
-                    break;
-                default:
-                    return;
-            }
-            /*var player = new System.Windows.Media.MediaPlayer();
-            player.Open(new Uri(label51.Text));
-            if (loopPlayer)
-                player.MediaEnded += MediaPlayer_Loop;
-            player.Play();*/
-            player.Play();
-        }
+            Uri path;
 
-        public static void Loop(Sound sound)
-        {
-            SoundPlayer player;
             switch (sound)
             {
                 case Sound.Background:
-                    player = new SoundPlayer(Hackathon_1.Properties.Resources.background);
+                    path = (new System.Uri(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Resources/background.wav")));
                     break;
                 case Sound.Move:
-                    player = new SoundPlayer(Hackathon_1.Properties.Resources.move);
+                    path = (new System.Uri(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), @"Resources/move.wav")));
                     break;
                 default:
                     return;
             }
-            player.PlayLooping();
+
+            new System.Threading.Thread(() => {
+                var c = new System.Windows.Media.MediaPlayer();
+                c.Open(path);
+                if (loop)
+                {
+                    c.MediaEnded += (object sender, EventArgs e) =>
+                    {
+                        System.Windows.Media.MediaPlayer player = sender as System.Windows.Media.MediaPlayer;
+                        if (player == null)
+                            return;
+
+                        player.Position = new TimeSpan(0);
+                        player.Play();
+                    };
+                }
+                
+                c.Play();
+            }).Start();
         }
     }
 }
