@@ -11,18 +11,32 @@ using System.Threading.Tasks;
 namespace Hackathon_1
 {
 
+    /// <summary>
+    /// The sounds currently implemented
+    /// </summary>
     public enum Sound
     {
+        //Background sound
         Background,
+        //Movement sound
         Move
     }
 
+    /// <summary>
+    /// Class to handle sounds
+    /// </summary>
     public static class Sounds
     {
+        /// <summary>
+        /// Play a sound.
+        /// </summary>
+        /// <param name="sound">The Sound.sound to be played</param>
+        /// <param name="loop">Whether or not the sound should be looped.</param>
         public static void Play(Sound sound, bool loop = false)
         {
             Uri path;
 
+            //Retrieve the path of the sound
             switch (sound)
             {
                 case Sound.Background:
@@ -35,13 +49,11 @@ namespace Hackathon_1
                     return;
             }
 
+            //Play the sound
             new System.Threading.Thread(() => {
                 var c = new System.Windows.Media.MediaPlayer();
                 c.Open(path);
-                c.MediaOpened += (object sender, EventArgs e) =>
-                {
-                    Console.WriteLine("Opened");
-                };
+                //Loop the sound
                 if (loop && sound == Sound.Background)
                 {
                     Task.Delay(47998).ContinueWith(_ =>

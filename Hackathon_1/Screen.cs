@@ -6,14 +6,24 @@ using System.Threading.Tasks;
 
 namespace Hackathon_1
 {
+    /// <summary>
+    /// A screen for displaying in-game content.
+    /// </summary>
     public class Screen
     {
+        //The width of the screen in characters.
         protected int width;
+        //The height of the screen in characters.
         protected int height;
 
+        //The offset from the topmost position.
         protected int _top;
+        //The offset from the leftmost position.
         protected int _left;
 
+        /// <summary>
+        /// The offset from the window's topmost position.
+        /// </summary>
         protected int top
         {
             get
@@ -26,6 +36,9 @@ namespace Hackathon_1
             }
         }
 
+        /// <summary>
+        /// The offset from the window's leftmost position.
+        /// </summary>
         protected int left
         {
             get
@@ -38,11 +51,17 @@ namespace Hackathon_1
             }
         }
 
+        /// <summary>
+        /// Draw the screen.
+        /// </summary>
         public virtual void Draw()
         {
             this.Clear();
         }
 
+        /// <summary>
+        /// Clear the screen.
+        /// </summary>
         public void Clear()
         {
             for (int y = 0; y < this.height; y++)
@@ -53,26 +72,45 @@ namespace Hackathon_1
             }
         }
 
+        /// <summary>
+        /// Redraw the screen.
+        /// </summary>
         public void Redraw()
         {
+            //Syntax sugar
             this.Draw();
         }
 
+        /// <summary>
+        /// Write a title for the screen.
+        /// </summary>
+        /// <param name="title">The screen's title.</param>
         protected void WriteTitle(string title)
         {
+            //Calculate padding
             int leftPadding = (width - title.Length) / 2;
 
+            //Write the title
             Console.SetCursorPosition(this.left + leftPadding, this.top);
             Console.Write(title);
         }
 
+        /// <summary>
+        /// Write out a text, horizontally aligned to the center.
+        /// </summary>
+        /// <param name="text">Text to write out.</param>
+        /// <param name="line">Which line to write it on.</param>
+        /// <param name="duration">The duration of the animation. 0 if no animation is wanted.</param>
         protected void WriteCenter(string text, int line, int duration = 0)
         {
+            //Calculate padding and write ticks
             int leftPadding = (width - text.Length) / 2;
             int tick = duration / text.Length;
 
+            //Chose write position
             Console.SetCursorPosition(this.left + leftPadding, this.top + line);
 
+            //Write the string out
             for (int i = 0; i < text.Length; i++)
             {
                 Console.Write(text[i]);
@@ -80,12 +118,19 @@ namespace Hackathon_1
             }
         }
 
+        /// <summary>
+        /// Write the text out in the center of the screen.
+        /// </summary>
+        /// <param name="text">The text to write.</param>
+        /// <param name="duration">The duration for the animation. 0 if no animation is wanted.</param>
         protected void WriteCenter(string text, int duration = 0)
         {
+            //Caluclate paddings and ticks
             int topPadding = (height - text.Split('\n').Length) / 2;
             int leftPadding = (width - text.Split('\n').Max(x => x.Length)) / 2;
             int tick = duration / text.Length;
 
+            //Animate the text being written
             int row = 0;
             foreach (String line in text.Split('\n'))
             {
@@ -101,22 +146,40 @@ namespace Hackathon_1
             }
         }
 
+        /// <summary>
+        /// Write out left-aligned text.
+        /// </summary>
+        /// <param name="text">The text to write</param>
+        /// <param name="line">The line to write the text on</param>
         protected void WriteLeft(string text, int line)
         {
             Console.SetCursorPosition(this.left, this.top + line);
             Console.Write(text);
         }
 
+        /// <summary>
+        /// Go to a specific row for writing.
+        /// </summary>
+        /// <param name="row">The row to go to</param>
         protected void GoToRow(int row)
         {
             Console.SetCursorPosition(Console.CursorTop, this.top + row);
         }
 
+        /// <summary>
+        /// Go to a specific column for writing.
+        /// </summary>
+        /// <param name="column">The column to go to</param>
         protected void GoToColumn(int column)
         {
             Console.SetCursorPosition(this.left + column, Console.CursorTop);
         }
 
+        /// <summary>
+        /// Go to a specific point for writing.
+        /// </summary>
+        /// <param name="column">The column to go to</param>
+        /// <param name="row">The row to go to</param>
         protected void GoToPoint(int column, int row)
         {
             GoToRow(row);
@@ -124,10 +187,17 @@ namespace Hackathon_1
         }
     }
 
+    /// <summary>
+    /// The stats screen.
+    /// </summary>
     public class StatsScreen : Screen
     {
         Player player;
 
+        /// <summary>
+        /// Create a new stats screen.
+        /// </summary>
+        /// <param name="player">The player for which to display stats</param>
         public StatsScreen(ref Player player)
         {
             this.player = player;
@@ -139,6 +209,9 @@ namespace Hackathon_1
             this.top = 0;
         }
 
+        /// <summary>
+        /// Overwridden draw function to display stats.
+        /// </summary>
         public override void Draw()
         {
             base.Draw();
@@ -151,11 +224,19 @@ namespace Hackathon_1
         }
     }
 
+    /// <summary>
+    /// The map screen.
+    /// </summary>
     public class MapScreen : Screen
     {
         Room room;
         Player player;
 
+        /// <summary>
+        /// Create a new map screen.
+        /// </summary>
+        /// <param name="player">The player for which to display the current position</param>
+        /// <param name="room">The room for which to display the map</param>
         public MapScreen(Player player, Room room)
         {
             this.player = player;
@@ -168,6 +249,9 @@ namespace Hackathon_1
             this.top = 0;
         }
 
+        /// <summary>
+        /// The overridden draw function to draw the map.
+        /// </summary>
         public override void Draw()
         {
             base.Draw();
@@ -218,8 +302,14 @@ namespace Hackathon_1
         }
     }
 
+    /// <summary>
+    /// The title screen.
+    /// </summary>
     public class TitleScreen : Screen
     {
+        /// <summary>
+        /// Create a new title screen.
+        /// </summary>
         public TitleScreen()
         {
             this.width = 119;
@@ -229,6 +319,9 @@ namespace Hackathon_1
             this.top = 0;
         }
 
+        /// <summary>
+        /// The overridden draw function to draw the title screen.
+        /// </summary>
         public override void Draw()
         {
             base.Draw();
@@ -252,10 +345,17 @@ namespace Hackathon_1
         }
     }
 
+    /// <summary>
+    /// The input screen.
+    /// </summary>
     public class InputScreen : Screen
     {
         List<string> messages = new List<string>();
 
+        /// <summary>
+        /// Create a new input screen with the chosen messages.
+        /// </summary>
+        /// <param name="messages">The list of messages to display</param>
         public InputScreen(List<string> messages = null)
         {
             this.width = 119;
@@ -268,6 +368,9 @@ namespace Hackathon_1
                 this.messages = messages;
         }
 
+        /// <summary>
+        /// The overridden draw function to display the input screen.
+        /// </summary>
         public override void Draw()
         {
             base.Draw();
@@ -281,8 +384,13 @@ namespace Hackathon_1
             Console.Write("ENTER YOUR COMMAND: ");
         }
 
+        /// <summary>
+        /// Handle input / draw input.
+        /// </summary>
+        /// <param name="input"></param>
         public void Handle(string input)
         {
+            //Control that no more than 10 messages will be written
             if (this.messages.Count > 10)
                 this.messages.RemoveAt(0);
             this.messages.Add(input);
