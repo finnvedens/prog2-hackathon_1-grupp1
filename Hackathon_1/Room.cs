@@ -21,12 +21,17 @@ namespace Hackathon_1
 
         public Action onEntered;
 
-        public Room(string name, int width, int height, int startPositionX, int startPositionY, List<Square> squares)
+        public List<Square> exits;
+
+        public Action onMoved;
+
+        public Room(string name, int width, int height, int startPositionX, int startPositionY, List<Square> squares, List<Square> exits)
         {
             this.name = name;
             this.width = width;
             this.height = height;
             this.squares = squares;
+            this.exits = exits;
 
             this.startPositionX = startPositionX;
             this.startPositionY = startPositionY;
@@ -74,7 +79,18 @@ namespace Hackathon_1
                     this.messageHandler(square.enterString);
                 if (square.item != null)
                     this.player.items.Add(square.item);
+                if (square.onEntered != null)
+                    square.onEntered();
                 this.squares.Remove(square);
+            }
+
+            var exits = this.exits.Where(sq => sq.positionX == this.player.positionX && sq.positionY == this.player.positionY);
+            if (exits.Count() > 0)
+            {
+                Square exit = exits.FirstOrDefault();
+                if(this.onMoved != null)
+                    this.onMoved();
+                this.squares.Remove(exit);
             }
         }
     }

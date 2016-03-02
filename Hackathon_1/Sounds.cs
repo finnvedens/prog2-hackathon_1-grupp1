@@ -38,17 +38,16 @@ namespace Hackathon_1
             new System.Threading.Thread(() => {
                 var c = new System.Windows.Media.MediaPlayer();
                 c.Open(path);
-                if (loop)
+                c.MediaOpened += (object sender, EventArgs e) =>
                 {
-                    c.MediaEnded += (object sender, EventArgs e) =>
+                    Console.WriteLine("Opened");
+                };
+                if (loop && sound == Sound.Background)
+                {
+                    Task.Delay(47998).ContinueWith(_ =>
                     {
-                        System.Windows.Media.MediaPlayer player = sender as System.Windows.Media.MediaPlayer;
-                        if (player == null)
-                            return;
-
-                        player.Position = new TimeSpan(0);
-                        player.Play();
-                    };
+                        Play(sound, loop);
+                    });
                 }
                 
                 c.Play();

@@ -39,6 +39,30 @@ namespace Hackathon_1
                 positionY = 7,
                 enterString = "You tripped on a barrel containing dolls. Three seconds later you were all done and so where they."
             }
+        },
+        new List<Square>() {
+            new Square()
+            {
+                positionX = 7,
+                positionY = 7
+            }
         });
+
+        public static Room TwoDoredRoom = new Room("Three doored room", 8, 8, 0, 3, new List<Square>()
+        {
+            new Square()
+            {
+                positionX = 4,
+                positionY = 7,
+                enterString = "You tripped on a barrel containing dolls. Three seconds later you were all done and so where they."
+            }
+        },
+            new List<Square>() {
+            new Square()
+            {
+                positionX = 7,
+                positionY = 7
+            }
+            });
     }
 }

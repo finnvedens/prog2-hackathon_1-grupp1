@@ -22,6 +22,10 @@ namespace Hackathon_1
 
             Room first = Rooms.ThreeDooredRoom;
             first.Enter(ref player);
+            first.onMoved = () =>
+            {
+                first = Rooms.TwoDoredRoom;
+            };
 
             StatsScreen statsScreen = new StatsScreen(ref player);
             //statsScreen.Draw();

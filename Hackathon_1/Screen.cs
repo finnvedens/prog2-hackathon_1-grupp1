@@ -197,6 +197,8 @@ namespace Hackathon_1
                         Console.Write("O ");
                     else if (this.room.squares.Where(sq => sq.positionX == x && sq.positionY == y).Count() > 0)
                         Console.Write("# ");
+                    else if (this.room.exits.Where(sq => sq.positionX == x && sq.positionY == y).Count() > 0)
+                        Console.Write("+ ");
                     else
                         Console.Write(". ");
                 }
@@ -247,37 +249,6 @@ namespace Hackathon_1
             this.WriteCenter("It is here where your story begins.", Console.CursorTop, 1000);
             Console.WriteLine();
             this.WriteCenter("PRESS ENTER TO BEGIN", Console.CursorTop, 1000);
-
-            /*
-            Console.Title = "Dragon's Quest Ultra HD 2016";
-
-            Art.WriteCenter(Art.Title);
-
-            Art.WriteAnimatedCenter("The boy who lost his cat.", 1000, () =>
-            {
-                Console.WriteLine();
-                Art.WriteAnimatedCenter("You lost your cat and you ran after it.", 1000, () =>
-                {
-                    Art.WriteAnimatedCenter("It ran towards a castle and you fell through a trapdoor.", 1000, () =>
-                    {
-                        Art.WriteAnimatedCenter("When you got up you saw nothing but darkness.", 1000, () =>
-                        {
-                            Art.WriteAnimatedCenter("You must find your cat.", 1000, () =>
-                            {
-                                Art.WriteAnimatedCenter("It is here where your story begins.", 1000, () =>
-                                {
-                                    Console.WriteLine("\n\n\n");
-                                    Art.WriteAnimatedCenter("PRESS ENTER TO BEGIN", 1000, () =>
-                                    {
-
-                                    }, true);
-                                });
-                            });
-                        });
-
-                    });
-                });
-            });*/
         }
     }
 
